@@ -1,0 +1,49 @@
+.whyUs {
+  padding: 3rem 1rem;
+  text-align: center;
+  background: var(--white);
+}
+
+.whyUs h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.reasons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  justify-content: center;
+}
+
+.reason {
+  background: var(--green-light);
+  padding: 2rem;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  text-align: start;
+  cursor: pointer;
+}
+
+.reason:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: var(--green-dark);
+
+  p {
+    color: white !important;
+  }
+}
+
+.icon {
+  font-size: 2.5rem;
+  color: var(--green-main);
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--green-main);
+}

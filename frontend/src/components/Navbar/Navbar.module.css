@@ -1,0 +1,13 @@
+.navbarContainer{
+    background-color: var(--green-dark);
+}
+
+.navbarBrand{
+    font-size: 1.25rem !important;
+    font-weight: 500 !important;
+}
+
+.navbarImage {
+  height: 30px;
+  width: 30px;
+}

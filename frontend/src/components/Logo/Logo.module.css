@@ -1,0 +1,6 @@
+.logo{
+    color: white;
+    span{
+        color: var(--green-main);
+    }
+}

@@ -1,0 +1,48 @@
+.services {
+  padding: 3rem 1rem;
+  text-align: center;
+  background: var(--green-dark);
+}
+
+.services h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.serviceCards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+
+  .iconBox {
+    flex: 1;
+    text-align: end;
+  }
+
+  .icon {
+    background-color: var(--green-light);
+    display: inline-block;
+    font-size: 3rem;
+    height: 75px;
+    width: 75px;
+    color: var(--green-dark);
+    border-radius: 50%;
+    padding: 5px;
+  }
+
+  .info {
+    flex: 3;
+    text-align: start;
+    p {
+      color: white;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+.faq {
+  padding: 3rem 1rem;
+  text-align: center;
+  background: var(--green-dark);
+  margin-top: 35px;
+}
+
+.faq h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.tabContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tabNav {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.tab {
+  background: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 5px;
+  padding: 1rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+.tab.activeTab {
+  background: var(--green-dark);
+  color: var(--white);
+}
+
+.tab:hover {
+  background: var(--gray-main);
+  color: var(--white);
+}
+
+.tabContent {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 80%;
+  margin-top: 1rem;
+}
+
+.tabContent p {
+  color: var(--gray-main);
+}

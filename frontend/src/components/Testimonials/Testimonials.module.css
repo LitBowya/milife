@@ -1,0 +1,104 @@
+.testimonials {
+  padding: 3rem 1rem;
+  text-align: center;
+  /* background: var(--white); */
+  position: relative;
+  height: 300px;
+}
+
+.testimonials h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: var(--green-dark);
+}
+
+.carouselWrapper {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.testimonialContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cardWrapper {
+  display: flex;
+  position: relative;
+  transition: transform 0.5s ease-in-out;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.card.active {
+  opacity: 1;
+}
+
+.card img {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.card p {
+  font-style: italic;
+  color: var(--gray-main);
+  text-align: center;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  font-size: 1.25rem;
+}
+
+.card h4 {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+.prevButton, .nextButton {
+  background-color: var(--green-lightest);
+  border: none;
+  color: var(--gray-main);
+  font-size: 1.5rem;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+}
+
+.prevButton {
+  left: 1rem;
+}
+
+.nextButton {
+  right: 1rem;
+}
+
+.prevButton:hover, .nextButton:hover {
+  background-color: var(--green-dark);
+  color: var(--white);
+}
+
+.down{
+    display: flex;
+}
