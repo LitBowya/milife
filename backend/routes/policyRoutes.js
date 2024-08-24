@@ -12,13 +12,13 @@ import { uploadMultipleImages } from "../utils/fileUpload.js";
 const router = express.Router();
 
 // Create a new policy
-router.post("/policies", uploadMultipleImages, protect, admin, createPolicy);
+router.post("/createPolicy", protect, createPolicy);
 
 // Get all policies
 router.get("/getAllPolicy", protect, getAllPolicies);
 
 // Get a specific policy by ID
-router.get("/:id/getPolicy", protect, getPolicyById);
+router.post("/getPolicy", protect, getPolicyById);
 
 // Update a specific policy by ID
 router.put("/:id/updatePolicy", protect, admin, updatePolicy);

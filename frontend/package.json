@@ -1,6 +1,5 @@
 {
   "name": "frontend",
-  "proxy": "http://localhost:5000/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -26,6 +25,7 @@
     "@nivo/line": "^0.87.0",
     "@nivo/pie": "^0.87.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "antd": "^5.20.2",
     "bootstrap": "^5.3.3",
     "css-modules": "^0.3.0",
     "formik": "^2.4.6",

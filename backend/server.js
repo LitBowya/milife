@@ -24,19 +24,17 @@ const app = express();
 // Database connection
 connectDB();
 
-// Serve static files from the "uploads" directory
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+// Serve static files from the "uploads" directory in the root
+app.use(express.static(path.join(path.resolve(), "/uploads")));
 
 // Enable CORS for frontend communication
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow requests from this origin
-    methods: ["GET", "POST", "PUT", "DELETE"], // Specify the allowed methods
-    credentials: true, // Allow cookies to be sent
+    origin: ["http://localhost:5173"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
-
-app.options("*", cors()); // Preflight request handling
 
 // Middleware for parsing cookies
 app.use(cookieParser());

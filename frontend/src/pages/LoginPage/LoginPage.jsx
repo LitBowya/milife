@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useLoginMutation } from "../../slices/authApiSlice";
@@ -14,11 +14,10 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [login, { isLoading }] = useLoginMutation();
+  const userInfo = useSelector((state) => state.auth.userInfo);
 
-  const { search } = useLocation();
-  const sp = new URLSearchParams(search);
-  const redirect = sp.get("redirect") || "/";
+  const isAdmin = userInfo?.user?.isAdmin;
+  const [login, { isLoading }] = useLoginMutation();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -26,14 +25,18 @@ const LoginPage = () => {
       const res = await login({ email, password }).unwrap();
       console.log("Login Response:", res); // Debugging login response
       dispatch(setCredentials({ ...res }));
-      navigate(redirect);
+      if (isAdmin) {
+        navigate("/admindashboard");
+      } else {
+        navigate("/userdashboard");
+      }
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center min-vh-80 mt-3">
+    <Container className="d-flex justify-content-center align-items-center min-vh-80 mt-5 pt-3">
       <Form
         onSubmit={submitHandler}
         className="p-4 border rounded shadow-sm"
@@ -68,18 +71,14 @@ const LoginPage = () => {
             </Button>
           </InputGroup>
         </Form.Group>
-        <Button
-          type="submit"
-          className="button"
-          disabled={isLoading}
-        >
+        <Button type="submit" className="button" disabled={isLoading}>
           Sign In
         </Button>
         <div className="mt-3 text-center">
           <p>
             New Customer?{" "}
             <Link
-              to={redirect ? `/register?redirect=${redirect}` : "/register"}
+              to= "/register"
             >
               Register
             </Link>

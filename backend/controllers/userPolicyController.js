@@ -11,31 +11,36 @@ export const createUserPolicy = async (req, res, next) => {
 
     // Validate required fields
     if (!userId || !policyId || !amountPaid) {
-      return res
-        .status(400)
-        .json({
-          status: "failed",
-          message: "User ID, policy ID, and amount paid are required",
-        });
+      return res.status(400).json({
+        status: "failed",
+        message: "User ID, policy ID, and amount paid are required",
+      });
     }
 
-    // Find the policy
+    // Find the policy by policyId
     const policy = await Policy.findById(policyId);
     if (!policy) {
       return res
         .status(404)
         .json({ status: "failed", message: "Policy not found" });
-    }
+      }
 
-    // Create the user policy
+      console.log('Policy found', policy)
+
+    // Extract the policy name (using policyType as the name)
+    const policyName = policy.policyType;
+    console.log("This is the policy name: ", policyName);
+
+    // Create the user policy with the policy name
     const userPolicy = new UserPolicy({
       userId,
       policyId,
+      policyName,
       amountPaid,
       startDate: new Date(), // Set start date as current date
       expiryDate: new Date(
         new Date().setMonth(new Date().getMonth() + policy.durationInMonths)
-      ), // Set expiry date based on duration
+      ), // Set expiry date based on policy duration
     });
 
     const createdUserPolicy = await userPolicy.save();
@@ -56,21 +61,31 @@ export const createUserPolicy = async (req, res, next) => {
 
 // Get user policies
 export const getUserPolicies = async (req, res, next) => {
-  try {
-    const userPolicies = await UserPolicy.find({
-      userId: req.user.id,
-    }).populate("policyId");
-    logger.info(`User policies fetched successfully for user: ${req.user.id}`);
-    res.json({
-      status: "success",
-      message: "User policies fetched successfully",
-      userPolicies,
-    });
-  } catch (error) {
-    logger.error(`Error fetching user policies: ${error.message}`);
-    res
-      .status(500)
-      .json({ status: "failed", message: "Internal Server Error" });
-    next(error);
-  }
+   try {
+     const { userId } = req.body;
+
+     const userPolicy = await UserPolicy.find({ userId });
+     console.log(userPolicy);
+     console.log("userid", userId);
+
+     if (!userPolicy || userPolicy.length === 0) {
+       logger.error(`No userPolicy found for user: ${userId}`);
+       return res
+         .status(404)
+         .json({ status: "failed", message: "userPolicy not found" });
+     }
+
+     logger.info(`userPolicy fetched successfully for user: ${userId}`);
+     res.json({
+       status: "success",
+       message: "userPolicy fetched successfully",
+       userPolicy,
+     });
+   } catch (error) {
+     logger.error(`Error fetching claims: ${error.message}`);
+     res
+       .status(500)
+       .json({ status: "failed", message: "Internal Server Error" });
+     next(error);
+   }
 };

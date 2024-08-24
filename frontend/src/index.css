@@ -37,7 +37,6 @@ body {
   font-family: "Roboto", sans-serif;
   color: var(--font-body);
   background-color: var(--gray-light); /* Light background for the body */
-  padding-top: 60px;
 }
 
 h1,

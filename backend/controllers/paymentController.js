@@ -8,8 +8,13 @@ import logger from "../utils/logger.js";
 // Get all payments
 export const getPayments = async (req, res, next) => {
   try {
-    const payments = await Payment.find({ userId: req.user.id });
-    logger.info(`Payments fetched successfully for user: ${req.user.id}`);
+    const { userId } = req.body;
+
+    const payments = await Payment.find({ userId }).populate({
+      path: "policyId",
+      select: "policyType",
+    });
+    logger.info(`Payments fetched successfully for user: ${userId}`);
     res.json({
       status: "success",
       message: "Payments fetched successfully",
@@ -21,6 +26,23 @@ export const getPayments = async (req, res, next) => {
       .status(500)
       .json({ status: "failed", message: "Internal Server Error" });
     next(error);
+  }
+};
+
+export const getAllPayments = async (req, res, next) => {
+  try {
+    const payments = await Payment.find({});
+    logger.info(`All payments fetched successfully`);
+    res.json({
+      status: "success",
+      message: "All payments fetched successfully",
+      payments,
+    });
+  } catch (error) {
+    logger.error(`Error fetching all payments: ${error.message}`);
+    res
+      .status(500)
+      .json({ status: "failed", message: "Internal Server Error" });
   }
 };
 
@@ -65,7 +87,6 @@ export const initiatePayment = async (req, res, next) => {
       });
     }
 
-    // Fetch the policy amount from the database
     const policy = await Policy.findById(policyId);
     if (!policy) {
       return res
@@ -73,7 +94,6 @@ export const initiatePayment = async (req, res, next) => {
         .json({ status: "failed", message: "Policy not found" });
     }
 
-    // Fetch the user based on email
     const user = await User.findOne({ email });
     if (!user) {
       return res
@@ -82,41 +102,37 @@ export const initiatePayment = async (req, res, next) => {
     }
     const userId = user._id;
 
-      const amount = policy.amount; // Use the policy's amount
+    const amount = policy.amount;
 
-      logger.info("policyId", policyId)
-      logger.info("userid", userId)
-      logger.info("amount", amount)
-
-    // Initialize Paystack payment with policy metadata
     const paymentData = {
-      amount: amount * 100, // Paystack expects the amount in kobo (i.e., cents)
+      amount: amount * 100,
       email,
       metadata: {
-        userId: userId.toString(), // Include user ID in metadata
-        policyId: policyId, // Include policy ID in metadata
+        userId: userId.toString(),
+        policyId: policyId,
       },
-      callback_url: process.env.PAYSTACK_CALLBACK_URL, // URL to redirect after payment
+      callback_url: process.env.PAYSTACK_CALLBACK_URL,
     };
 
     const response = await paystack.transaction.initialize(paymentData);
 
     if (response.status) {
-      logger.info(`Payment initiated successfully for amount: ${amount}`);
       res.json({
         status: "success",
         message: "Payment initiated successfully",
-        authorization_url: response.data.authorization_url,
+        data: {
+          authorization_url: response.data.authorization_url,
+          access_code: response.data.access_code,
+          reference: response.data.reference,
+        },
       });
     } else {
-      logger.error(`Payment initiation failed: ${response.message}`);
-      res.status(400).json({ status: "failed", message: response.message });
+      res.status(400).json({
+        status: "failed",
+        message: response.message,
+      });
     }
   } catch (error) {
-    logger.error(`Error initiating payment: ${error.message}`);
-    res
-      .status(500)
-      .json({ status: "failed", message: "Internal Server Error" });
     next(error);
   }
 };
@@ -173,9 +189,12 @@ export const verifyPayment = async (req, res, next) => {
             .json({ status: "failed", message: "Policy not found" });
         }
 
+        const policyName = policy.policyType;
+
         const userPolicy = new UserPolicy({
           userId,
           policyId: paymentData.metadata.policyId,
+          policyName,
           amountPaid: paymentData.amount / 100, // Convert from kobo to currency
           startDate: new Date(), // Set start date as current date
           expiryDate: new Date(

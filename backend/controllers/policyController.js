@@ -23,8 +23,8 @@ export const createPolicy = async (req, res, next) => {
       coverageDetails,
       durationInMonths,
       amount,
-      filePaths,
-      startDate: new Date(), // Set start date as current date
+        filePaths,
+      startDate: new Date(),
       expiryDate: new Date(
         new Date().setMonth(new Date().getMonth() + durationInMonths)
       ),

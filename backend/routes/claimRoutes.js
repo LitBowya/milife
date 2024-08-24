@@ -11,13 +11,13 @@ import { protect } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 // Create a new claim
-router.post("/createClaims", protect, createClaim);
+router.post("/create", protect, createClaim);
 
 // Get all claims
-router.get("/getClaims", protect, getAllClaims);
+router.get("/getclaims", getAllClaims);
 
 // Get a specific claim by ID
-router.get("/:id/getClaim", protect, getClaimById);
+router.post("/getclaim", getClaimById);
 
 // Update a specific claim by ID
 router.put("/:id/updateClaim", protect, updateClaim);

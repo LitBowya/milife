@@ -1,28 +1,16 @@
-import { Navbar, Nav, Container, Image, Button } from "react-bootstrap";
+import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import { Link as ScrollLink } from "react-scroll";
 import { Link as RouterLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useLogoutMutation } from "../../slices/authApiSlice";
-import { setCredentials } from "../../slices/authSlice";
+import { useSelector } from "react-redux";
 import Logo from "../Logo/Logo";
 import NavbarCss from "./Navbar.module.css";
 
 const NavbarMenu = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
-  const dispatch = useDispatch();
-  const [logout] = useLogoutMutation();
 
-  const handleLogout = async () => {
-    try {
-      await logout().unwrap();
-      dispatch(setCredentials(null)); // Clear user info from the state
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
 
   return (
-    <Navbar expand="lg" fixed="top" className={NavbarCss.navbarContainer}>
+    <Navbar expand="lg" className={NavbarCss.navbarContainer}>
       <Container>
         <Navbar.Brand>
           <RouterLink to="/">
@@ -101,14 +89,13 @@ const NavbarMenu = () => {
           <Nav className={NavbarCss.navbarDropdown}>
             {userInfo ? (
               <>
-                {userInfo.user.isAdmin ? (
+                {userInfo && userInfo.user.isAdmin ? (
                   <>
                     <RouterLink to="/admindashboard" className="nav-link">
                       <Image
                         src={userInfo.user.profilePicture}
                         className={NavbarCss.navbarImage}
                         roundedCircle
-                        alt="Profile"
                       />
                     </RouterLink>
                   </>
@@ -119,18 +106,10 @@ const NavbarMenu = () => {
                         src={userInfo.user.profilePicture}
                         className={NavbarCss.navbarImage}
                         roundedCircle
-                        alt="Profile"
                       />
                     </RouterLink>
                   </>
                 )}
-                <Button
-                  variant="outline-danger"
-                  onClick={handleLogout}
-                  className={NavbarCss.navbarButton}
-                >
-                  Logout
-                </Button>
               </>
             ) : (
               <RouterLink to="/login" className="nav-link">

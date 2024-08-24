@@ -11,7 +11,7 @@ import { protect, admin } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 // Get User Profile
-router.get("/getProfile", protect, getUserProfile);
+router.post("/getprofile", protect, getUserProfile);
 
 // Update User Profile
 router.put("/updateProfile", protect, updateUserProfile);

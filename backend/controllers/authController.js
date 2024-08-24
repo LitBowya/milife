@@ -19,7 +19,7 @@ export const registerUser = async (req, res, next) => {
     }
 
     // Check if a profile image was uploaded
-    const profilePicture = req.file ? `/${req.file.path}` : "";
+    const profilePicture = req.file ? `/${req.file.path}` : ""; // Save the path of the uploaded file
 
     // Create new user
     user = new User({
@@ -47,7 +47,6 @@ export const registerUser = async (req, res, next) => {
     next(error);
   }
 };
-
 
 // Login a user
 export const loginUser = async (req, res, next) => {
@@ -90,7 +89,7 @@ export const loginUser = async (req, res, next) => {
 export const logoutUser = (req, res, next) => {
   try {
     // Clear the JWT token by setting it to expire immediately
-    res.cookie('jwt', '', {
+    res.cookie("jwt", "", {
       httpOnly: true,
       expires: new Date(0),
     });
@@ -99,7 +98,9 @@ export const logoutUser = (req, res, next) => {
     res.status(200).json({ status: "success", message: "Logout successful" });
   } catch (error) {
     logger.error(`Error logging out user: ${error.message}`);
-    res.status(500).json({ status: "failed", message: "Internal Server Error" });
+    res
+      .status(500)
+      .json({ status: "failed", message: "Internal Server Error" });
     next(error);
   }
 };

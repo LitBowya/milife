@@ -1,6 +1,6 @@
 // export const BASE_URL =
 //   process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
-export const BASE_URL = "http://localhost:5000/api";
+export const BASE_URL = "";
 export const AUTH_URL = "/auth";
 export const USERS_URL = "/users";
 export const POLICY_URL = "/policies";

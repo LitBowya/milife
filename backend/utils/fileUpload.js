@@ -2,9 +2,11 @@ import path from "path";
 import fs from "fs";
 import multer from "multer";
 import logger from "../utils/logger.js";
+import { config } from "dotenv";
 
-// Ensure the 'uploads' directory exists
-const uploadsDir = path.join("uploads");
+config();
+
+const uploadsDir = path.join("uploads/");
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }

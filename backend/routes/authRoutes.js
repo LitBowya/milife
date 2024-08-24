@@ -1,10 +1,10 @@
 import express from "express";
 import {
   registerUser,
-    loginUser,
-  logoutUser
+  loginUser,
+  logoutUser,
 } from "../controllers/authController.js";
-import { uploadSingleImage} from "../utils/fileUpload.js";
+import { uploadSingleImage } from "../utils/fileUpload.js";
 
 const router = express.Router();
 

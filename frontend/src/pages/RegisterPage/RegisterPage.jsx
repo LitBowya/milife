@@ -11,17 +11,13 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [register, { isLoading }] = useRegisterMutation();
   // Access userInfo directly
-
-  const { search } = useLocation();
-  const sp = new URLSearchParams(search);
-  const redirect = sp.get("redirect") || "/login";
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -38,7 +34,7 @@ const RegisterPage = () => {
 
         const res = await register(formData).unwrap();
         dispatch(setCredentials({ ...res }));
-        navigate(redirect);
+        navigate('/login');
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -50,7 +46,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <Container className="mt-3 d-flex justify-content-center align-items-center min-vh-80">
+    <Container className="mt-5 pt-3 d-flex justify-content-center align-items-center min-vh-80">
       <Form
         onSubmit={submitHandler}
         className="p-4 border rounded shadow-sm"
@@ -117,7 +113,7 @@ const RegisterPage = () => {
 
         <div className="mt-3 text-center">
           Already have an account?{" "}
-          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
+          <Link to="/login">
             Login
           </Link>
         </div>

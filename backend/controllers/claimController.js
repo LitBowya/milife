@@ -23,24 +23,32 @@ export const getAllClaims = async (req, res, next) => {
 // Get Claim by ID
 export const getClaimById = async (req, res, next) => {
   try {
-    const claim = await Claim.findOne({
-      _id: req.params.id,
-      userId: req.user.id,
+    const { userId } = req.body;
+
+    // Fetch claims by userId and populate the policy details
+    const claims = await Claim.find({ userId }).populate({
+      path: "policyId",
+      select: "policyType",
     });
-    if (!claim) {
-      logger.error(`Claim not found: ${req.params.id}`);
+
+    console.log(claims);
+    console.log("userid", userId);
+
+    if (!claims || claims.length === 0) {
+      logger.error(`No claims found for user: ${userId}`);
       return res
         .status(404)
-        .json({ status: "failed", message: "Claim not found" });
+        .json({ status: "failed", message: "Claims not found" });
     }
-    logger.info(`Claim fetched successfully: ${req.params.id}`);
+
+    logger.info(`Claims fetched successfully for user: ${userId}`);
     res.json({
       status: "success",
-      message: "Claim fetched successfully",
-      claim,
+      message: "Claims fetched successfully",
+      claims,
     });
   } catch (error) {
-    logger.error(`Error fetching claim: ${error.message}`);
+    logger.error(`Error fetching claims: ${error.message}`);
     res
       .status(500)
       .json({ status: "failed", message: "Internal Server Error" });
@@ -62,13 +70,11 @@ export const createClaim = async (req, res, next) => {
 
     const createdClaim = await claim.save();
     logger.info(`Claim created successfully: ${createdClaim._id}`);
-    res
-      .status(201)
-      .json({
-        status: "success",
-        message: "Claim created successfully",
-        claim: createdClaim,
-      });
+    res.status(201).json({
+      status: "success",
+      message: "Claim created successfully",
+      claim: createdClaim,
+    });
   } catch (error) {
     logger.error(`Error creating claim: ${error.message}`);
     res

@@ -8,8 +8,11 @@ import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Get all payments
-router.get("/getPayment", protect, getPayments);
+// Get payments
+router.post("/getpayment", protect, getPayments);
+
+// Get All payments
+router.get("/getAllPayment", protect, getPayments);
 
 // Initiate Payment
 router.post("/pay", initiatePayment);

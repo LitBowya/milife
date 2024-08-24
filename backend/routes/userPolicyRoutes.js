@@ -7,6 +7,6 @@ import { protect } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 // Get user policies
-router.get("/getUserPolicy", protect, getUserPolicies);
+router.post("/getUserPolicy", getUserPolicies);
 
 export default router;

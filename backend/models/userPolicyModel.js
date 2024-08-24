@@ -12,6 +12,10 @@ const userPolicySchema = new mongoose.Schema(
       ref: "Policy",
       required: true,
     },
+    policyName: {
+        type: String,
+        required: true,
+    },
     purchaseDate: {
       type: Date,
       default: Date.now,
@@ -23,6 +27,14 @@ const userPolicySchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true,
+    },
+    startDate: {
+      type: Date,
+      default: Date.now, // Default to current date if not provided
+    },
+    expiryDate: {
+      type: Date,
+      required: true, // Ensure expiry date is always set
     },
   },
   {
