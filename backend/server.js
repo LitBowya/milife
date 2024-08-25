@@ -25,15 +25,15 @@ const app = express();
 connectDB();
 
 // Serve static files from the "uploads" directory in the root
-app.use(express.static(path.join(path.resolve(), "/uploads")));
+app.use('/uploads', express.static(path.join(path.resolve(), "uploads")));
 
 // Enable CORS for frontend communication
 app.use(
-  cors({
-    origin: ["http://localhost:5173"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
+    cors({
+        origin: ["http://localhost:5173"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
+    })
 );
 
 // Middleware for parsing cookies
@@ -45,11 +45,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Session management
 app.use(
-  session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
+    session({
+        secret: process.env.JWT_SECRET,
+        resave: false,
+        saveUninitialized: true,
+    })
 );
 
 // Define API routes

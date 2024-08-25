@@ -68,12 +68,12 @@ const CreateClaim = () => {
   };
 
   if (isLoadingPolicies) return <Spin size="large" />;
-//   if (isPoliciesError)
-//       return (
-//         <Card sx={{ padding: 2, margin: 2 }}>
-//           <Alert severity="info">You have no current policies</Alert>
-//         </Card>
-//       );
+  if (isPoliciesError)
+      return (
+        <Card sx={{ padding: 2, margin: 2 }}>
+          <Alert severity="info">You have no current policies</Alert>
+        </Card>
+      );
 
   return (
     <Box
