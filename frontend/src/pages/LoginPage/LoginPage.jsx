@@ -14,18 +14,15 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userInfo = useSelector((state) => state.auth.userInfo);
-
-  const isAdmin = userInfo?.user?.isAdmin;
   const [login, { isLoading }] = useLoginMutation();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      console.log("Login Response:", res); // Debugging login response
-      dispatch(setCredentials({ ...res }));
-      if (isAdmin) {
+      const profilePicture = res.user.profilePicture;
+      dispatch(setCredentials({ ...res, profilePicture }));
+      if (res.user.isAdmin) {
         navigate("/admindashboard");
       } else {
         navigate("/userdashboard");

@@ -1,10 +1,10 @@
 import express from "express";
 import {
-  createPolicy,
-  getPolicyById,
-  updatePolicy,
-  deletePolicy,
-  getAllPolicies,
+    createPolicy,
+    getPolicyById,
+    updatePolicy,
+    deletePolicy,
+    getAllPolicies,
 } from "../controllers/policyController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 import { uploadMultipleImages } from "../utils/fileUpload.js";
@@ -12,7 +12,7 @@ import { uploadMultipleImages } from "../utils/fileUpload.js";
 const router = express.Router();
 
 // Create a new policy
-router.post("/createPolicy", protect, createPolicy);
+router.post("/create", uploadMultipleImages, protect, createPolicy);
 
 // Get all policies
 router.get("/getAllPolicy", protect, getAllPolicies);

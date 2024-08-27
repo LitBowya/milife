@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/create", protect, createClaim);
 
 // Get all claims
-router.get("/getclaims", getAllClaims);
+router.get("/", getAllClaims);
 
 // Get a specific claim by ID
 router.post("/getclaim", getClaimById);

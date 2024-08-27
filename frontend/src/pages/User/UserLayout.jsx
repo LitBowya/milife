@@ -8,6 +8,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { useLogoutMutation } from "../../slices/authApiSlice";
 import { setCredentials } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
+import { getProfilePictureUrl } from "../../utils/profilePicture";
 import UserLayoutCss from './UserLayout.module.css'
 
 const { Header, Content, Sider } = Layout;
@@ -17,6 +18,8 @@ const UserLayout = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
     const dispatch = useDispatch();
     const [logout] = useLogoutMutation();
+
+    const profilePicture = getProfilePictureUrl()
 
     const handleLogout = async () => {
       try {
@@ -33,7 +36,7 @@ const UserLayout = () => {
         <Menu theme="dark" mode="inline">
           <div className={UserLayoutCss.userInfo}>
             <Image
-              src={userInfo.user.profilePicture}
+              src={profilePicture}
               roundedCircle
               className={UserLayoutCss.image}
             />
@@ -44,25 +47,54 @@ const UserLayout = () => {
             </p>
           </div>
           <Menu.Item key="1">
-            <Link className={UserLayoutCss.navLink} to="/userdashboard">Dashboard</Link>
+            <Link className={UserLayoutCss.navLink} to="/userdashboard">
+              Dashboard
+            </Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link className={UserLayoutCss.navLink} to="/userdashboard/policies">Policies</Link>
+            <Link
+              className={UserLayoutCss.navLink}
+              to="/userdashboard/policies"
+            >
+              Policies
+            </Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link className={UserLayoutCss.navLink} to="/userdashboard/mypolicies">My Policies</Link>
+            <Link
+              className={UserLayoutCss.navLink}
+              to="/userdashboard/mypolicies"
+            >
+              My Policies
+            </Link>
           </Menu.Item>
           <Menu.Item key="4">
-            <Link className={UserLayoutCss.navLink} to="/userdashboard/createclaims">Create Claim</Link>
+            <Link
+              className={UserLayoutCss.navLink}
+              to="/userdashboard/createclaims"
+            >
+              Create Claim
+            </Link>
           </Menu.Item>
           <Menu.Item key="5">
-            <Link className={UserLayoutCss.navLink} to="/userdashboard/myclaims">My Claims</Link>
+            <Link
+              className={UserLayoutCss.navLink}
+              to="/userdashboard/myclaims"
+            >
+              My Claims
+            </Link>
           </Menu.Item>
           <Menu.Item key="6">
-            <Link className={UserLayoutCss.navLink} to="/userdashboard/mypayments">My Payments</Link>
+            <Link
+              className={UserLayoutCss.navLink}
+              to="/userdashboard/mypayments"
+            >
+              My Payments
+            </Link>
           </Menu.Item>
           <Menu.Item key="7">
-            <Link className={UserLayoutCss.navLink} to="/userdashboard/profile">Profile</Link>
+            <Link className={UserLayoutCss.navLink} to="/userdashboard/profile">
+              Profile
+            </Link>
           </Menu.Item>
         </Menu>
       </Sider>

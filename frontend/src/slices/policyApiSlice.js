@@ -6,7 +6,7 @@ export const policyApiSlice = apiSlice.injectEndpoints({
     // Create a new policy
     createPolicy: builder.mutation({
       query: (policyData) => ({
-        url: `${POLICY_URL}/policies`,
+        url: `${POLICY_URL}/create`,
         method: "POST",
         body: policyData,
       }),

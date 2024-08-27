@@ -4,10 +4,12 @@ import { Link as RouterLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Logo from "../Logo/Logo";
 import NavbarCss from "./Navbar.module.css";
+import { getProfilePictureUrl } from "../../utils/profilePicture";
 
 const NavbarMenu = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
 
+  const profilePictureUrl = getProfilePictureUrl();
 
   return (
     <Navbar expand="lg" className={NavbarCss.navbarContainer}>
@@ -93,7 +95,7 @@ const NavbarMenu = () => {
                   <>
                     <RouterLink to="/admindashboard" className="nav-link">
                       <Image
-                        src={userInfo.user.profilePicture}
+                        src={profilePictureUrl}
                         className={NavbarCss.navbarImage}
                         roundedCircle
                       />
@@ -103,7 +105,7 @@ const NavbarMenu = () => {
                   <>
                     <RouterLink to="/userdashboard" className="nav-link">
                       <Image
-                        src={userInfo.user.profilePicture}
+                        src={profilePictureUrl}
                         className={NavbarCss.navbarImage}
                         roundedCircle
                       />

@@ -142,15 +142,7 @@ export const deletePolicy = async (req, res, next) => {
         .json({ status: "failed", message: "Policy not found" });
     }
 
-    // Ensure the policy belongs to the user or the user is an admin
-    if (policy.userId.toString() !== req.user.id && !req.user.isAdmin) {
-      logger.error(`Unauthorized access to policy: ${req.params.id}`);
-      return res
-        .status(403)
-        .json({ status: "failed", message: "Unauthorized" });
-    }
-
-    await policy.remove();
+      await policy.deleteOne({ id: req.params.id });
     logger.info(`Policy deleted successfully: ${req.params.id}`);
     res.json({ status: "success", message: "Policy removed" });
   } catch (error) {

@@ -7,6 +7,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { useLogoutMutation } from "../../slices/authApiSlice";
 import { setCredentials } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
+import { getProfilePictureUrl } from "../../utils/profilePicture";
 import AdminLayoutCss from "./AdminLayout.module.css";
 
 const { Header, Content, Sider } = Layout;
@@ -15,6 +16,8 @@ const AdminLayout = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
     const dispatch = useDispatch();
     const [logout] = useLogoutMutation();
+
+    const profilePicture = getProfilePictureUrl()
 
     const handleLogout = async () => {
       try {
@@ -28,10 +31,10 @@ const AdminLayout = () => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider>
-        <Menu theme="dark" mode="inline">
+        <Menu theme="dark" mode="inline" className={AdminLayoutCss.sider}>
           <div className={AdminLayoutCss.userInfo}>
             <Image
-              src={userInfo.user.profilePicture}
+              src={profilePicture}
               roundedCircle
               className={AdminLayoutCss.image}
             />
@@ -80,7 +83,7 @@ const AdminLayout = () => {
               className={AdminLayoutCss.navLink}
               to="/admindashboard/payments"
             >
-              Manage Policy
+              Payments
             </Link>
           </Menu.Item>
         </Menu>

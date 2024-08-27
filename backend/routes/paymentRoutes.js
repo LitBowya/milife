@@ -2,7 +2,8 @@ import express from "express";
 import {
   getPayments,
   initiatePayment,
-  verifyPayment,
+    verifyPayment,
+    getAllPayments
 } from "../controllers/paymentController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -12,7 +13,7 @@ const router = express.Router();
 router.post("/getpayment", protect, getPayments);
 
 // Get All payments
-router.get("/getAllPayment", protect, getPayments);
+router.get("/getallpayment", protect, getAllPayments);
 
 // Initiate Payment
 router.post("/pay", initiatePayment);

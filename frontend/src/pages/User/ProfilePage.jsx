@@ -11,10 +11,13 @@ import {
   Alert,
 } from "@mui/material";
 import { formatDate } from "../../utils/formatDate";
+import { getProfilePictureUrl } from "../../utils/profilePicture";
 
 const ProfilePage = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
-  const userId = userInfo.user._id;
+    const userId = userInfo.user._id;
+
+    const profilePicture = getProfilePictureUrl()
 
   const {
     data: profile,
@@ -62,7 +65,7 @@ const ProfilePage = () => {
         <CardContent sx={{ textAlign: "center" }}>
           <Avatar
             alt={profile.name}
-            src={profile.profilePicture}
+            src={profilePicture}
             sx={{ width: 100, height: 100, margin: "auto" }}
           />
           <Typography variant="h5" color="textSecondary" gutterBottom>

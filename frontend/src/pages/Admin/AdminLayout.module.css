@@ -1,3 +1,8 @@
+.sider{
+    position: sticky;
+    top: 5px;
+}
+
 .userInfo {
   display: block;
   display: flex;
